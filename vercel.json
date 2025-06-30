@@ -1,31 +1,22 @@
 {
-  "functions": {
-    "api/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "builds": [
     {
       "src": "vite.config.ts",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/:match*",
-      "destination": "/api/:match*"
+      "use": "@vercel/static-build"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "api/**/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
-// This configuration file is for deploying a Vite application on Vercel.
-// It specifies the Node.js runtime for API functions, sets up a static build for the Vite project,
-// and configures URL rewrites to handle API requests and serve the main HTML file for all other routes.
-// The API functions are located in the "api" directory, and the static files will be built into the "dist" directory.
-// The rewrites ensure that API requests are directed to the appropriate
