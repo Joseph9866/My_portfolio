@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/*.ts": {
-      "runtime": "vercel-node@canary"
+      "runtime": "nodejs18.x"
     }
   },
   "builds": [
@@ -24,3 +24,8 @@
     }
   ]
 }
+// This configuration file is for deploying a Vite application on Vercel.
+// It specifies the Node.js runtime for API functions, sets up a static build for the Vite project,
+// and configures URL rewrites to handle API requests and serve the main HTML file for all other routes.
+// The API functions are located in the "api" directory, and the static files will be built into the "dist" directory.
+// The rewrites ensure that API requests are directed to the appropriate
