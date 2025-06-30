@@ -67,11 +67,9 @@ const Skills: React.FC = () => {
 
   const certifications = [
     'AWS Certified Cloud Practitioner',
-    'AWS Certified Solutions Architect - Associate',
-    'Google Cloud Professional Cloud Architect',
-    'Certified Kubernetes Administrator (CKA)',
+    'KCNA: Kubernetes and Cloud Native Associate',
+    'LFS250: Kubernetes and Cloud Native Essentials',
     'Certified SIYB ILO Trainer',
-    'Microsoft Azure Fundamentals'
   ];
 
   return (
@@ -163,7 +161,7 @@ const Skills: React.FC = () => {
               <div className="text-base-content/70">Technologies Mastered</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-info mb-2">6</div>
+              <div className="text-4xl font-bold text-info mb-2">5</div>
               <div className="text-base-content/70">Certifications Earned</div>
             </div>
           </div>
