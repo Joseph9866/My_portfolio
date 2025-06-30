@@ -29,20 +29,17 @@ const Contact: React.FC = () => {
   const [cvStatus, setCvStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [showCvModal, setShowCvModal] = useState(false);
 
+  const API_BASE = 'https://abenmzzeqe.execute-api.us-west-2.amazonaws.com/portfoliostage';
+
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setContactStatus('sending');
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(`${API_BASE}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: contactForm.name,
-          email: contactForm.email,
-          subject: contactForm.subject,
-          message: contactForm.message
-        })
+        body: JSON.stringify(contactForm)
       });
 
       if (res.ok) {
@@ -64,7 +61,7 @@ const Contact: React.FC = () => {
     setCvStatus('sending');
 
     try {
-      const res = await fetch('/api/cv-request', {
+      const res = await fetch(`${API_BASE}/api/cv-request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
