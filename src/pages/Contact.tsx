@@ -1,6 +1,15 @@
-// Updated Contact.tsx (No EmailJS - uses Vercel API backend)
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, MessageSquare, Send, Download, CheckCircle, AlertCircle } from 'lucide-react';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  MessageSquare,
+  Send,
+  Download,
+  CheckCircle,
+  AlertCircle,
+  X
+} from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [contactForm, setContactForm] = useState({
@@ -31,6 +40,7 @@ const Contact: React.FC = () => {
         body: JSON.stringify({
           name: contactForm.name,
           email: contactForm.email,
+          subject: contactForm.subject,
           message: contactForm.message
         })
       });
@@ -131,7 +141,11 @@ const Contact: React.FC = () => {
                   <div>
                     <h3 className="font-semibold">{info.title}</h3>
                     {info.link !== '#' ? (
-                      <a href={info.link} className="text-base-content/70 hover:text-primary transition-colors" {...(info.title === 'WhatsApp' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                      <a
+                        href={info.link}
+                        className="text-base-content/70 hover:text-primary transition-colors"
+                        {...(info.title === 'WhatsApp' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      >
                         {info.value}
                       </a>
                     ) : (
@@ -201,6 +215,59 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* CV Modal */}
+      {showCvModal && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative">
+            <button className="absolute top-3 right-3 text-gray-500 hover:text-black" onClick={() => setShowCvModal(false)}>
+              <X className="w-5 h-5" />
+            </button>
+            <h2 className="text-2xl font-bold mb-4">Request CV Access</h2>
+            <form onSubmit={handleCvRequest} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Your Name"
+                required
+                className="input input-bordered w-full"
+                value={cvForm.name}
+                onChange={(e) => setCvForm({ ...cvForm, name: e.target.value })}
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                required
+                className="input input-bordered w-full"
+                value={cvForm.email}
+                onChange={(e) => setCvForm({ ...cvForm, email: e.target.value })}
+              />
+              <textarea
+                placeholder="Purpose of CV Request"
+                required
+                rows={3}
+                className="textarea textarea-bordered w-full"
+                value={cvForm.purpose}
+                onChange={(e) => setCvForm({ ...cvForm, purpose: e.target.value })}
+              />
+              <button type="submit" className="btn btn-primary w-full">
+                {cvStatus === 'sending' ? 'Sending...' : 'Submit Request'}
+              </button>
+              {cvStatus === 'success' && (
+                <div className="alert alert-success mt-2">
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Request sent. You’ll receive access via email.</span>
+                </div>
+              )}
+              {cvStatus === 'error' && (
+                <div className="alert alert-error mt-2">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>Something went wrong. Please try again.</span>
+                </div>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
