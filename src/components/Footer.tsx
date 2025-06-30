@@ -17,13 +17,13 @@ const Footer: React.FC = () => {
               passionate about creating innovative digital solutions.
             </p>
             <div className="flex space-x-3">
-              <a href="https://linkedin.com" className="btn btn-ghost btn-sm btn-circle">
+              <a href="www.linkedin.com/in/joseph-kiarie-047a26264" className="btn btn-ghost btn-sm btn-circle">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="https://github.com" className="btn btn-ghost btn-sm btn-circle">
+              <a href="https://github.com/Joseph9866" className="btn btn-ghost btn-sm btn-circle">
                 <Github className="w-4 h-4" />
               </a>
-              <a href="https://twitter.com" className="btn btn-ghost btn-sm btn-circle">
+              <a href="https://x.com/josekeam01" className="btn btn-ghost btn-sm btn-circle">
                 <Twitter className="w-4 h-4" />
               </a>
             </div>
