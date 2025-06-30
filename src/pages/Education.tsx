@@ -17,12 +17,12 @@ const Education: React.FC = () => {
     {
       type: 'certification',
       title: 'AWS Certified Cloud Practitioner',
-      issuer: 'Amazon Web Services',
+      issuer: 'Amazon Web Services Training and Certification',
       year: '2024',
       expiryYear: '2027',
-      credentialId: 'AWS-CCP-123456',
-      description: 'Foundational understanding of AWS cloud services and architecture principles.',
-      verificationUrl: '#'
+      credentialId: 'e94bf1dd-c578-4c81-93f4-ec63bc627c04',
+      description: 'Validates foundational knowledge of AWS Cloud concepts, services, billing, pricing, support, and security — ideal for non-technical and technical professionals beginning their cloud journey.',
+      verificationUrl:'https://www.credly.com/badges/e94bf1dd-c578-4c81-93f4-ec63bc627c04'
     },
     {
       type: 'certification',
@@ -35,33 +35,23 @@ const Education: React.FC = () => {
     },
     {
       type: 'certification',
-      title: 'Google Cloud Professional Cloud Architect',
-      issuer: 'Google Cloud',
-      year: '2023',
-      expiryYear: '2025',
-      credentialId: 'GCP-PCA-345678',
-      description: 'Advanced certification for designing and managing Google Cloud architecture.',
-      verificationUrl: '#'
+      title: 'LFS250: Kubernetes and Cloud Native Essentials',
+      issuer: 'The Linux Foundation',
+      year: '2025',
+      expiryYear: null,
+      credentialId: '707d939f-d337-48ec-a4f9-14f5b8667dac',
+      description: 'Covers the fundamentals of Kubernetes, containers, microservices, CI/CD, observability, GitOps, and cloud-native tools and architecture.',
+      verificationUrl: 'https://www.credly.com/badges/707d939f-d337-48ec-a4f9-14f5b8667dac'
     },
     {
       type: 'certification',
-      title: 'Certified Kubernetes Administrator (CKA)',
-      issuer: 'Cloud Native Computing Foundation',
-      year: '2022',
-      expiryYear: '2025',
-      credentialId: 'CKA-901234',
-      description: 'Demonstrates expertise in Kubernetes cluster administration and troubleshooting.',
-      verificationUrl: '#'
-    },
-    {
-      type: 'certification',
-      title: 'AWS Certified Solutions Architect - Associate',
-      issuer: 'Amazon Web Services',
-      year: '2021',
-      expiryYear: '2024',
-      credentialId: 'AWS-SAA-567890',
-      description: 'Proficiency in designing distributed systems on AWS platform.',
-      verificationUrl: '#'
+      title: 'KCNA: Kubernetes and Cloud Native Associate',
+      issuer: 'The Linux Foundation',
+      year: '2025',
+      expiryYear: '2027',
+      credentialId: '76352669-a952-4795-b551-4cd370d6dc3e',
+      description:'Demonstrates foundational knowledge of Kubernetes, application containers, GitOps, service mesh, cloud native concepts, and clusters.',
+      verificationUrl: 'https://www.credly.com/badges/76352669-a952-4795-b551-4cd370d6dc3e'
     }
   ];
 
@@ -159,11 +149,11 @@ const Education: React.FC = () => {
         <div className="mt-20" data-aos="fade-up">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">2</div>
+              <div className="text-4xl font-bold text-primary mb-2">1</div>
               <div className="text-base-content/70">Degrees Earned</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-secondary mb-2">6</div>
+              <div className="text-4xl font-bold text-secondary mb-2">5</div>
               <div className="text-base-content/70">Professional Certifications</div>
             </div>
             <div className="text-center">
