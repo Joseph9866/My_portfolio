@@ -43,15 +43,27 @@ const Education: React.FC = () => {
       description: 'Covers the fundamentals of Kubernetes, containers, microservices, CI/CD, observability, GitOps, and cloud-native tools and architecture.',
       verificationUrl: 'https://www.credly.com/badges/707d939f-d337-48ec-a4f9-14f5b8667dac'
     },
+    
     {
       type: 'certification',
-      title: 'KCNA: Kubernetes and Cloud Native Associate',
-      issuer: 'The Linux Foundation',
+      title: 'Career Essentials in Software Development',
+      issuer: 'Microsoft and LinkedIn',
       year: '2025',
-      expiryYear: '2027',
-      credentialId: '76352669-a952-4795-b551-4cd370d6dc3e',
-      description:'Demonstrates foundational knowledge of Kubernetes, application containers, GitOps, service mesh, cloud native concepts, and clusters.',
-      verificationUrl: 'https://www.credly.com/badges/76352669-a952-4795-b551-4cd370d6dc3e'
+      expiryYear: 'N/A',
+      credentialId:'c7392f273b58c6ba79068cf9faa7f394529ef1d297e3bfd7acf24e13aabf6cfb',
+      description:'Validates foundational skills in programming and software development, including best practices and tools.',
+      verificationUrl: 'https://www.linkedin.com/learning/certificates/c7392f273b58c6ba79068cf9faa7f394529ef1d297e3bfd7acf24e13aabf6cfb'
+    }
+
+     {
+      type: 'certification',
+      title:  'Introduction to Artificial Intelligence',
+      issuer: 'Ajira Digital Program (Republic of Kenya)',
+      year: '2024',
+      expiryYear: 'N/A',
+      credentialId:'TR19594808022024',
+      description:'Successfully completed 1-month training and 5-week mentorship program covering AI fundamentals through the Ajira Digital Program. Certified by the Kenyan government initiative for digital skills development.',
+      verificationUrl: 'https://ajiradigital.go.ke'
     }
   ];
 
