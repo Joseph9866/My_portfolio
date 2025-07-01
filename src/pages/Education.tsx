@@ -53,9 +53,9 @@ const Education: React.FC = () => {
       credentialId:'c7392f273b58c6ba79068cf9faa7f394529ef1d297e3bfd7acf24e13aabf6cfb',
       description:'Validates foundational skills in programming and software development, including best practices and tools.',
       verificationUrl: 'https://www.linkedin.com/learning/certificates/c7392f273b58c6ba79068cf9faa7f394529ef1d297e3bfd7acf24e13aabf6cfb'
-    }
+    },
 
-     {
+    {
       type: 'certification',
       title:  'Introduction to Artificial Intelligence',
       issuer: 'Ajira Digital Program (Republic of Kenya)',
