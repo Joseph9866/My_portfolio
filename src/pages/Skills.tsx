@@ -70,6 +70,8 @@ const Skills: React.FC = () => {
     'KCNA: Kubernetes and Cloud Native Associate',
     'LFS250: Kubernetes and Cloud Native Essentials',
     'Certified SIYB ILO Trainer',
+    'Career Essentials in Software Development by Microsoft and LinkedIn',
+    'Ajira Digital Program Certificate - Artificial Intelligence',
   ];
 
   return (
