@@ -49,7 +49,7 @@ const About: React.FC = () => {
           <div className="space-y-6" data-aos="fade-left">
             <h2 className="text-3xl font-bold mb-6">My Journey</h2>
             <p className="text-lg text-base-content/80 leading-relaxed">
-              Hello! I'm Joseph Kimani, a passionate Web Developer and Cloud Computing Specialist 
+              Hello! I'm Joseph Kimani, a passionate Software Developer and Cloud Computing Specialist 
               based in Murang'a, Kenya. With over 5 years of experience in the tech industry, I've had 
               the privilege of working on diverse projects that have shaped my expertise and perspective.
             </p>
