@@ -93,7 +93,7 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'josekeam01@email.com',
+      value: 'josekeam01@gmail.com',
       link: 'mailto:josekeam01@email.com'
     },
     {
