@@ -77,9 +77,7 @@ const Footer: React.FC = () => {
           <p className="text-sm opacity-60">
             © {currentYear} Joseph Kimani. All rights reserved.
           </p>
-          <p className="text-sm opacity-60">
-            Built with React, TypeScript & DaisyUI
-          </p>
+          
         </div>
       </div>
     </footer>
