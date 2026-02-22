@@ -11,7 +11,12 @@ const Home: React.FC = () => {
           <div className="max-w-4xl" data-aos="fade-up">
             <div className="avatar mb-8">
               <div className="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src="images/minerbg.png" alt="Joseph Kimani" />
+                <img 
+                  src="images/minerbg.png" 
+                  alt="Joseph Kimani" 
+                  fetchpriority="high"
+                  loading="eager"
+                />
               </div>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6">

@@ -41,7 +41,12 @@ const About: React.FC = () => {
           <div data-aos="fade-right">
             <div className="avatar mb-8">
               <div className="w-64 rounded-2xl shadow-2xl">
-                <img src="images/my photo.png" alt="Joseph Kimani" />
+                <img 
+                  src="images/my photo.png" 
+                  alt="Joseph Kimani" 
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
           </div>

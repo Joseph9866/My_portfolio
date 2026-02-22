@@ -18,12 +18,26 @@ import '@n8n/chat/style.css';
 
 function App() {
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false,
-    });
+    // Defer AOS initialization to improve INP
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        AOS.init({
+          duration: 1000,
+          easing: 'ease-in-out',
+          once: true,
+          mirror: false,
+        });
+      });
+    } else {
+      setTimeout(() => {
+        AOS.init({
+          duration: 1000,
+          easing: 'ease-in-out',
+          once: true,
+          mirror: false,
+        });
+      }, 1);
+    }
   }, []);
 
   return (
