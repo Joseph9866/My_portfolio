@@ -52,6 +52,7 @@ const Chatbot: React.FC = () => {
     abortRef.current = controller;
 
     try {
+      console.log("[v0] Sending chat request to /api/chat");
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,8 +65,12 @@ const Chatbot: React.FC = () => {
         signal: controller.signal,
       });
 
+      console.log("[v0] Response status:", response.status, response.statusText);
+
       if (!response.ok) {
-        throw new Error(`HTTP error ${response.status}`);
+        const errorText = await response.text();
+        console.log("[v0] Error response body:", errorText);
+        throw new Error(`HTTP error ${response.status}: ${errorText}`);
       }
 
       const assistantMessage: ChatMessage = {
@@ -119,6 +124,7 @@ const Chatbot: React.FC = () => {
         }
       }
     } catch (err: unknown) {
+      console.log("[v0] Chat error:", err);
       if (err instanceof Error && err.name === 'AbortError') return;
       // Add error message
       setMessages((prev) => [

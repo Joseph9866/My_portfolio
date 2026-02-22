@@ -1,80 +1,117 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-function apiPlugin(): Plugin {
+function chatApiPlugin(): Plugin {
   return {
-    name: 'api-handler',
+    name: 'chat-api',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (!req.url?.startsWith('/api/')) return next();
+        if (req.url !== '/api/chat' || req.method !== 'POST') return next();
 
-        const apiPath = req.url.replace('/api/', '').split('?')[0];
-        const filePath = path.resolve(__dirname, 'api', `${apiPath}.ts`);
+        console.log("[v0] Chat API hit");
 
         try {
-          // Use Vite's SSR module loader to import the API handler
-          const mod = await server.ssrLoadModule(filePath);
-          const handler = mod.default;
-
-          if (typeof handler !== 'function') {
-            res.statusCode = 404;
-            res.end('API handler not found');
-            return;
-          }
-
           // Collect request body
           const chunks: Buffer[] = [];
           for await (const chunk of req) {
             chunks.push(chunk as Buffer);
           }
-          const body = Buffer.concat(chunks).toString();
+          const bodyStr = Buffer.concat(chunks).toString();
+          const { messages } = JSON.parse(bodyStr);
+          console.log("[v0] Messages received:", messages.length);
 
-          // Build a standard Request object
-          const protocol = req.headers['x-forwarded-proto'] || 'http';
-          const host = req.headers.host || 'localhost';
-          const url = `${protocol}://${host}${req.url}`;
-
-          const controller = new AbortController();
-          req.on('close', () => controller.abort());
-
-          const request = new Request(url, {
-            method: req.method,
-            headers: Object.fromEntries(
-              Object.entries(req.headers).filter(([, v]) => v !== undefined) as [string, string][]
-            ),
-            body: req.method !== 'GET' && req.method !== 'HEAD' ? body : undefined,
-            signal: controller.signal,
-          });
-
-          const response: Response = await handler(request);
-
-          res.statusCode = response.status;
-          response.headers.forEach((value, key) => {
-            res.setHeader(key, value);
-          });
-
-          if (response.body) {
-            const reader = response.body.getReader();
-            const pump = async () => {
-              while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                res.write(value);
-              }
-              res.end();
-            };
-            await pump();
-          } else {
-            res.end(await response.text());
+          const apiKey = process.env.AI_GATEWAY_API_KEY;
+          console.log("[v0] API key exists:", !!apiKey, "length:", apiKey?.length);
+          
+          if (!apiKey) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'AI_GATEWAY_API_KEY not set' }));
+            return;
           }
+
+          // Load system prompt via SSR
+          const { SYSTEM_PROMPT } = await server.ssrLoadModule('/api/knowledge.ts') as { SYSTEM_PROMPT: string };
+
+          const openaiMessages = [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...messages.map((m: { role: string; content: string }) => ({
+              role: m.role,
+              content: m.content,
+            })),
+          ];
+
+          console.log("[v0] Calling AI Gateway...");
+          const aiResponse = await fetch('https://ai-gateway.vercel.sh/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model: 'openai/gpt-4o-mini',
+              messages: openaiMessages,
+              stream: true,
+            }),
+          });
+
+          console.log("[v0] AI Gateway status:", aiResponse.status);
+
+          if (!aiResponse.ok) {
+            const errText = await aiResponse.text();
+            console.error("[v0] AI Gateway error:", errText);
+            res.writeHead(502, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'AI service error', details: errText }));
+            return;
+          }
+
+          // Stream the response
+          res.writeHead(200, {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+          });
+
+          const reader = aiResponse.body!.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed.startsWith('data:')) continue;
+              const data = trimmed.slice(5).trim();
+              if (data === '[DONE]') {
+                res.write('data: [DONE]\n\n');
+                continue;
+              }
+
+              try {
+                const parsed = JSON.parse(data);
+                const delta = parsed.choices?.[0]?.delta?.content;
+                if (delta) {
+                  const chunk = JSON.stringify({ type: 'text-delta', textDelta: delta });
+                  res.write(`data: ${chunk}\n\n`);
+                }
+              } catch {
+                // skip
+              }
+            }
+          }
+
+          res.end();
         } catch (err) {
-          console.error('API error:', err);
-          res.statusCode = 500;
-          res.end(JSON.stringify({ error: 'Internal Server Error' }));
+          console.error("[v0] Chat API error:", err);
+          if (!res.headersSent) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+          }
+          res.end(JSON.stringify({ error: 'Internal Server Error', details: String(err) }));
         }
       });
     },
@@ -83,12 +120,11 @@ function apiPlugin(): Plugin {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), apiPlugin()],
+  plugins: [react(), chatApiPlugin()],
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
   build: {
-    // Enable code splitting for better performance
     rollupOptions: {
       output: {
         manualChunks: {
@@ -97,9 +133,7 @@ export default defineConfig({
         },
       },
     },
-    // Optimize chunk size
     chunkSizeWarningLimit: 1000,
-    // Enable minification
     minify: 'terser',
     terserOptions: {
       compress: {
