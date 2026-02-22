@@ -6,13 +6,13 @@ import 'aos/dist/aos.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import Chatbot from './components/Chatbot';
 import Home from './pages/Home';
 import About from './pages/About';
 import Education from './pages/Education';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Contact from './pages/Contact';
-import '@n8n/chat/style.css';
 
 
 
@@ -57,6 +57,7 @@ function App() {
         </main>
         <Footer />
         <ScrollToTop />
+        <Chatbot />
       </div>
     </Router>
   );
