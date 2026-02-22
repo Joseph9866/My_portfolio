@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   Mail,
   Phone,
@@ -29,25 +30,32 @@ const Contact: React.FC = () => {
   const [cvStatus, setCvStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [showCvModal, setShowCvModal] = useState(false);
 
-  const API_BASE = 'https://abenmzzeqe.execute-api.us-west-2.amazonaws.com/portfoliostage';
+  // EmailJS configuration
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
+  const EMAILJS_TEMPLATE_ID_CONTACT = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CONTACT || '';
+  const EMAILJS_TEMPLATE_ID_CV = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CV || '';
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setContactStatus('sending');
 
     try {
-      const res = await fetch(`${API_BASE}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(contactForm)
-      });
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_CONTACT,
+        {
+          from_name: contactForm.name,
+          from_email: contactForm.email,
+          subject: contactForm.subject,
+          message: contactForm.message,
+          to_name: 'Joseph Kimani',
+        },
+        EMAILJS_PUBLIC_KEY
+      );
 
-      if (res.ok) {
-        setContactStatus('success');
-        setContactForm({ name: '', email: '', subject: '', message: '' });
-      } else {
-        setContactStatus('error');
-      }
+      setContactStatus('success');
+      setContactForm({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       console.error('Contact error:', error);
       setContactStatus('error');
@@ -61,26 +69,24 @@ const Contact: React.FC = () => {
     setCvStatus('sending');
 
     try {
-      const res = await fetch(`${API_BASE}/api/cv-request`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: cvForm.name,
-          email: cvForm.email,
-          reason: cvForm.purpose
-        })
-      });
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_CV,
+        {
+          from_name: cvForm.name,
+          from_email: cvForm.email,
+          purpose: cvForm.purpose,
+          to_name: 'Joseph Kimani',
+        },
+        EMAILJS_PUBLIC_KEY
+      );
 
-      if (res.ok) {
-        setCvStatus('success');
-        setCvForm({ name: '', email: '', purpose: '' });
-        setTimeout(() => {
-          setCvStatus('idle');
-          setShowCvModal(false);
-        }, 3000);
-      } else {
-        setCvStatus('error');
-      }
+      setCvStatus('success');
+      setCvForm({ name: '', email: '', purpose: '' });
+      setTimeout(() => {
+        setCvStatus('idle');
+        setShowCvModal(false);
+      }, 3000);
     } catch (error) {
       console.error('CV request error:', error);
       setCvStatus('error');

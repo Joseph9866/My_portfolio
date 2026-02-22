@@ -7,7 +7,7 @@ const Education: React.FC = () => {
       type: 'education',
       title: 'Bachelor of Science in Mathematics and Computer Science',
       institution: 'Muranga University of Technology',
-      year: '2023-current',
+      year: '2023-2026',
       description: 'Specialized in Cloud Computing and Distributed Systems. Thesis on serverless architecture optimization.',
       gpa: '3.8/4.0'
     }
@@ -133,7 +133,7 @@ const Education: React.FC = () => {
 
                       {item.type === 'certification' && (
                         <div className="flex flex-col space-y-2">
-                          <div className="text-sm text-base-content/60">
+                          <div className="text-sm text-base-content/60 break-all">
                             <strong>Credential ID:</strong> {item.credentialId}
                           </div>
                           {item.verificationUrl && (

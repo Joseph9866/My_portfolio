@@ -12,19 +12,9 @@ import Education from './pages/Education';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Contact from './pages/Contact';
-import { useEffect } from 'react';
 import '@n8n/chat/style.css';
-import { createChat } from '@n8n/chat';
 
-export const App = () => {
-	useEffect(() => {
-		createChat({
-			webhookUrl: 'https://agents.customcx.com/webhook/71b9dd6d-e122-42be-b7f9-db0646c1315a/chat'
-		});
-	}, []);
 
-	return (<div></div>);
-};
 
 function App() {
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code, Cloud, Database, Globe, Smartphone, Cog as Cogs } from 'lucide-react';
+import { Code, Cloud, Database, Globe, Smartphone, Cog as Cogs, Bot } from 'lucide-react';
 
 const Skills: React.FC = () => {
   const skillCategories = [
@@ -62,6 +62,16 @@ const Skills: React.FC = () => {
         'Git & GitHub', 'Linux/Unix', 'Nginx', 'Apache', 'Elasticsearch',
         'Monitoring & Logging', 'Performance Optimization', 'Security Best Practices'
       ]
+    },
+    {
+      title: 'AI Automation & Workflow',
+      icon: Bot,
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-500/10',
+      skills: [
+        'n8n', 'Make.com', 'HubSpot', 'Zoho CRM', 'Workflow Automation',
+        'API Integration', 'Process Optimization', 'AI Integration'
+      ]
     }
   ];
 
@@ -81,7 +91,7 @@ const Skills: React.FC = () => {
         <div className="text-center mb-16" data-aos="fade-up">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">My Skills</h1>
           <p className="text-xl text-base-content/70 max-w-3xl mx-auto">
-            A comprehensive overview of my technical expertise and professional capabilities
+            Specializing in AI automation and workflow optimization, with expertise spanning cloud computing, full-stack development, and business process automation
           </p>
         </div>
 
@@ -103,7 +113,7 @@ const Skills: React.FC = () => {
                 </div>
 
                 <div className="space-y-3">
-                  {category.skills.map((skill, skillIndex) => (
+                  {category.skills.map((skill) => (
                     <div 
                       key={skill}
                       className="flex items-center space-x-3 p-2 rounded-lg hover:bg-base-200 transition-colors duration-200"
@@ -146,28 +156,7 @@ const Skills: React.FC = () => {
           </div>
         </div>
 
-        {/* Experience Summary */}
-        <div className="text-center" data-aos="fade-up">
-          <h2 className="text-3xl font-bold mb-8">Experience Summary</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">5+</div>
-              <div className="text-base-content/70">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-secondary mb-2">50+</div>
-              <div className="text-base-content/70">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-accent mb-2">20+</div>
-              <div className="text-base-content/70">Technologies Mastered</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-info mb-2">5</div>
-              <div className="text-base-content/70">Certifications Earned</div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   );

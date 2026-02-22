@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Cloud, Users } from 'lucide-react';
+import { ArrowRight, Code, Cloud, Users, Workflow } from 'lucide-react';
 
 const Home: React.FC = () => {
   return (
@@ -18,12 +18,12 @@ const Home: React.FC = () => {
               Hi, I'm <span className="text-primary">Joseph Kimani</span>
             </h1>
             <div className="text-xl md:text-2xl text-base-content/80 mb-8 space-y-2">
-              <p>Software Developer | Cloud Computing Specialist</p>
-              <p>Certified SIYB ILO Trainer</p>
+              <p>AI Automation Engineer | Cloud Computing Specialist</p>
+              <p>AWS Certified Cloud Practitioner</p>
             </div>
             <p className="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-base-content/70">
-              Passionate about creating innovative digital solutions and empowering businesses 
-              through technology and training. Let's build something amazing together.
+              Specializing in workflow automation and scalable web systems that empower businesses 
+              through technology. Let's build something amazing together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/projects" className="btn btn-primary btn-lg">
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="card bg-base-100 shadow-xl" data-aos="fade-up" data-aos-delay="100">
               <div className="card-body text-center">
                 <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -87,6 +87,19 @@ const Home: React.FC = () => {
                 </p>
               </div>
             </div>
+
+            <div className="card bg-base-100 shadow-xl" data-aos="fade-up" data-aos-delay="400">
+              <div className="card-body text-center">
+                <div className="mx-auto w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mb-4">
+                  <Workflow className="w-8 h-8 text-purple-500" />
+                </div>
+                <h3 className="card-title justify-center text-xl mb-4">AI Automation & Workflow</h3>
+                <p className="text-base-content/70">
+                  Designing automation architecture and integrating AI-powered workflows using 
+                  platforms like n8n, Make.com, HubSpot, and Zoho CRM to streamline business processes.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -99,8 +112,8 @@ const Home: React.FC = () => {
               Ready to Start Your Next Project?
             </h2>
             <p className="text-lg text-base-content/70 mb-8">
-              Let's collaborate to bring your ideas to life with innovative solutions 
-              that drive results and exceed expectations.
+              Let's collaborate to transform your business processes with automation solutions 
+              that deliver measurable value and drive real results.
             </p>
             <Link to="/contact" className="btn btn-primary btn-lg">
               Let's Work Together

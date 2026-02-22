@@ -37,11 +37,11 @@ const About: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-20">
           <div data-aos="fade-right">
             <div className="avatar mb-8">
               <div className="w-64 rounded-2xl shadow-2xl">
-                <img src="images/Myimage.jpeg" alt="Joseph Kimani" />
+                <img src="images/my photo.png" alt="Joseph Kimani" />
               </div>
             </div>
           </div>
@@ -49,25 +49,28 @@ const About: React.FC = () => {
           <div className="space-y-6" data-aos="fade-left">
             <h2 className="text-3xl font-bold mb-6">My Journey</h2>
             <p className="text-lg text-base-content/80 leading-relaxed">
-              Hello! I'm Joseph Kimani, a passionate Software Developer and Cloud Computing Specialist 
-              based in Murang'a, Kenya. With over 5 years of experience in the tech industry, I've had 
-              the privilege of working on diverse projects that have shaped my expertise and perspective.
+              Hello! I'm Joseph Kimani, an AI Automation Engineer and Cloud Computing Specialist 
+              based in Murang'a, Kenya. As a third-year student, I've focused on building practical 
+              experience through hands-on projects and production-ready solutions that bridge 
+              technology and business.
             </p>
             <p className="text-lg text-base-content/80 leading-relaxed">
               My journey began with a curiosity about how websites work, which evolved into a 
-              deep passion for creating digital experiences that make a difference. As a certified 
-              AWS Cloud Practitioner and SIYB ILO Trainer, I bridge the gap between technology 
-              and business needs.
+              passion for creating digital experiences that drive real business value. As a certified 
+              AWS Cloud Practitioner and SIYB ILO Trainer, I specialize in translating complex 
+              technical systems into business solutions. I apply SIYB standards to create 
+              revenue-driven solutions that empower businesses through technology.
             </p>
             <p className="text-lg text-base-content/80 leading-relaxed">
               When I'm not coding or training entrepreneurs, you'll find me exploring new 
-              technologies, contributing to open-source projects, or mentoring aspiring developers. 
-              I believe in the power of technology to transform businesses and improve lives.
+              technologies, contributing to open-source projects, or mentoring fellow students and 
+              aspiring developers. I believe in the power of technology to transform businesses 
+              and improve lives through practical, scalable solutions.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <div className="badge badge-primary badge-lg">5+ Years Experience</div>
-              <div className="badge badge-secondary badge-lg">50+ Projects Completed</div>
-              <div className="badge badge-accent badge-lg">AWS Certified</div>
+              <div className="badge badge-primary badge-lg">AWS Certified</div>
+              <div className="badge badge-secondary badge-lg">SIYB Certified Trainer</div>
+              <div className="badge badge-accent badge-lg">AI Automation Engineer</div>
             </div>
           </div>
         </div>
@@ -113,14 +116,14 @@ const About: React.FC = () => {
             </div>
             <div className="card bg-base-200">
               <div className="card-body text-center">
-                <h3 className="card-title justify-center mb-2">Community Builder</h3>
-                <p className="text-sm">Active in local tech meetups and developer communities</p>
+                <h3 className="card-title justify-center mb-2">Business & Entrepreneurship</h3>
+                <p className="text-sm">Combining technical expertise with business acumen to build scalable, revenue-driven solutions</p>
               </div>
             </div>
             <div className="card bg-base-200">
               <div className="card-body text-center">
-                <h3 className="card-title justify-center mb-2">Continuous Learner</h3>
-                <p className="text-sm">Constantly updating skills through courses and certifications</p>
+                <h3 className="card-title justify-center mb-2">Mentorship & Leadership</h3>
+                <p className="text-sm">Guiding fellow students and aspiring developers in their tech journey</p>
               </div>
             </div>
           </div>
