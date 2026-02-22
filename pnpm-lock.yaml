@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@emailjs/browser':
-        specifier: ^3.11.0
+        specifier: ^3.12.1
         version: 3.12.1
       '@n8n/chat':
         specifier: ^1.9.1
