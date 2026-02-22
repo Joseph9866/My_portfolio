@@ -18,149 +18,113 @@ const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const projects: Project[] = [
-    {
+     {
       id: 1,
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution with payment integration and inventory management.',
-      longDescription: 'A comprehensive e-commerce platform built with React and Node.js, featuring user authentication, product catalog, shopping cart, payment processing with Stripe, order management, and admin dashboard. The platform includes advanced features like product reviews, wishlist, and real-time inventory tracking.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'JWT', 'Socket.io'],
-      liveUrl: 'https://ecommerce-demo.com',
-      githubUrl: 'https://github.com/josephkeam/ecommerce',
-      imageUrl: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600',
+      title: 'MIA Health Solutions Website Revamp',
+      description: 'Modern, responsive healthcare website redesign focused on clarity, accessibility, and performance.',
+      longDescription: 'A complete redesign and redevelopment of the MIA Health Solutions website to improve user experience, visual consistency, and content structure. Built using React with Vite and TypeScript for a scalable, maintainable architecture, and styled with Tailwind CSS for responsive, utility-first design. The platform emphasizes clear service presentation, intuitive navigation, optimized performance, and cross-device compatibility to effectively communicate the organization’s healthcare mission and offerings.',
+      technologies: ['React (Vite)', 'TypeScript', 'Tailwind CSS'],
+      liveUrl: 'https://miahealthsolutions.org/',
+      githubUrl: 'https://github.com/Joseph9866/MIA--health.git',
+      imageUrl: 'images/MIA.png',
       category: 'Web Development',
-      features: ['User Authentication', 'Payment Integration', 'Admin Dashboard', 'Real-time Updates', 'Responsive Design']
+      features: ['Responsive Design', 'Component-Based Architecture', 'Optimized Performance', 'Improved Navigation', 'Accessible UI']
     },
     {
-      id: 2,
-      title: 'Cloud Infrastructure Automation',
-      description: 'AWS CloudFormation templates and Terraform scripts for automated infrastructure deployment.',
-      longDescription: 'A collection of Infrastructure as Code (IaC) templates and scripts for automating AWS cloud infrastructure deployment. Includes multi-environment setups, auto-scaling configurations, monitoring and alerting, security best practices, and cost optimization strategies.',
-      technologies: ['AWS', 'Terraform', 'CloudFormation', 'Python', 'Docker', 'Jenkins'],
-      liveUrl: 'https://infrastructure-demo.com',
-      githubUrl: 'https://github.com/josephkeam/aws-infrastructure',
-      imageUrl: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Cloud Computing',
-      features: ['Auto-scaling', 'Multi-environment', 'Cost Optimization', 'Security Hardening', 'Monitoring']
+     id: 2,
+     title: 'ALJana Tech Corporate Website with Admin Panel',
+     description: 'Modern corporate website with integrated admin dashboard for content management.',
+     longDescription: 'A fully responsive corporate website developed for ALJana Tech to showcase branding, digital marketing, and technology services. Built using React (Vite) and TypeScript for scalable, type-safe development, and styled with Tailwind CSS for a clean, modern interface. The platform includes a custom admin panel that enables dynamic content management, service updates, and structured data control without modifying source code. Designed with reusable components, optimized performance, and clear service presentation to support business growth and digital visibility.',
+     technologies: ['React (Vite)', 'TypeScript', 'Tailwind CSS'],
+     liveUrl: 'https://aljana.vercel.app/',
+     githubUrl: 'https://github.com/Joseph9866/ALJana-Tech.git',
+     imageUrl: 'images/Aljana.png',
+     category: 'Web Development',
+     features: ['Admin Dashboard', 'Dynamic Content Management', 'Responsive Design', 'Component-Based Architecture', 'Performance Optimization']
     },
     {
       id: 3,
-      title: 'Task Management App',
-      description: 'Collaborative task management application with real-time updates and team features.',
-      longDescription: 'A modern task management application similar to Trello or Asana, featuring drag-and-drop functionality, real-time collaboration, project templates, time tracking, file attachments, and comprehensive reporting. Built with a focus on user experience and team productivity.',
-      technologies: ['React', 'TypeScript', 'Firebase', 'Material-UI', 'PWA'],
-      liveUrl: 'https://taskmanager-demo.com',
-      githubUrl: 'https://github.com/josephkeam/task-manager',
-      imageUrl: 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600',
+      title: 'ACK Mt. Kenya Guest House Website',
+      description: 'Responsive hospitality website for accommodation booking and guest information.',
+      longDescription: 'A modern, responsive website developed for ACK Mt. Kenya Guest House to showcase accommodation services, facilities, and booking information. Built with React (Vite) and TypeScript for a scalable and maintainable frontend architecture, and styled using Tailwind CSS for clean, responsive layouts. The platform focuses on clear room presentation, service highlights, structured navigation, and optimized performance to enhance user experience and online visibility.',
+      technologies: ['React (Vite)', 'TypeScript', 'Tailwind CSS'],
+      liveUrl: 'https://ack-guesthousewebsite.vercel.app/',
+      githubUrl: 'https://github.com/Joseph9866/ackMERNweb.git',
+      imageUrl: 'images/ACK.png',
       category: 'Web Development',
-      features: ['Real-time Collaboration', 'Drag & Drop', 'Time Tracking', 'File Attachments', 'PWA Support']
+      features: ['Responsive Design', 'Service Showcase', 'Structured Navigation', 'Optimized Performance', 'Component-Based Architecture']
     },
     {
       id: 4,
-      title: 'Microservices Architecture',
-      description: 'Scalable microservices architecture with Docker, Kubernetes, and API Gateway.',
-      longDescription: 'A production-ready microservices architecture demonstrating best practices for containerization, orchestration, service discovery, load balancing, and monitoring. Includes CI/CD pipelines, centralized logging, distributed tracing, and security implementations.',
-      technologies: ['Docker', 'Kubernetes', 'Kong', 'Prometheus', 'Grafana', 'ELK Stack'],
-      liveUrl: 'https://microservices-demo.com',
-      githubUrl: 'https://github.com/josephkeam/microservices',
-      imageUrl: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Cloud Computing',
-      features: ['Service Discovery', 'Load Balancing', 'Distributed Tracing', 'Centralized Logging', 'Auto-healing']
+      title: 'Professional Portfolio Website',
+      description: 'Responsive personal brand website for showcasing services, projects, and professional profile.',
+      longDescription: 'A modern portfolio and personal brand website designed to present professional services, projects, and contact information in a structured and visually engaging format. Developed using React (Vite) and TypeScript for scalable, type-safe architecture, and styled with Tailwind CSS for responsive, utility-first design. The platform emphasizes clean UI, reusable components, optimized performance, and cross-device compatibility to strengthen online presence and digital credibility.',
+      technologies: ['React (Vite)', 'TypeScript', 'Tailwind CSS'],
+      liveUrl: 'https://simonwebsite.vercel.app/',
+      githubUrl: 'https://github.com/Joseph9866/simon-repo.git',
+      imageUrl: 'images/Simonportfolio.png',
+      category: 'Web Development',
+      features: ['Responsive Design', 'Project Showcase', 'Service Presentation', 'Reusable Components', 'Optimized Performance']
     },
     {
       id: 5,
-      title: 'Business Training Portal',
-      description: 'Learning management system for SIYB training programs with progress tracking.',
-      longDescription: 'A comprehensive Learning Management System (LMS) designed specifically for SIYB (Start and Improve Your Business) training programs. Features include course management, student progress tracking, interactive quizzes, certificate generation, and instructor dashboards.',
-      technologies: ['React', 'Node.js', 'PostgreSQL', 'AWS S3', 'Chart.js'],
-      liveUrl: 'https://training-portal-demo.com',
-      githubUrl: 'https://github.com/josephkeam/training-portal',
-      imageUrl: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Education',
-      features: ['Course Management', 'Progress Tracking', 'Interactive Quizzes', 'Certificate Generation', 'Video Streaming']
+      title: 'Task Management Web Application',
+      description: 'Productivity-focused task management system with structured workflow organization.',
+      longDescription: 'A responsive task management application designed to help users organize, prioritize, and track daily activities efficiently. Built using React (Vite) and TypeScript for scalable, maintainable frontend architecture, and styled with Tailwind CSS for a clean and responsive interface. The application emphasizes structured task organization, state management, reusable components, and optimized performance to deliver a smooth user experience across devices.',
+      technologies: ['React (Vite)', 'TypeScript', 'Tailwind CSS'],
+      liveUrl: 'https://task-manager-smoky-sigma.vercel.app/',
+      githubUrl: 'https://github.com/Joseph9866/Task_manager-my-.git',
+      imageUrl: 'images/Taskmanager.png',
+      category: 'Web Development',
+      features: ['Task Organization', 'Responsive Design', 'State Management', 'Reusable Components', 'Optimized Performance']
     },
     {
       id: 6,
-      title: 'Real-time Chat Application',
-      description: 'Scalable chat application with multiple rooms, file sharing, and video calls.',
-      longDescription: 'A feature-rich real-time chat application supporting multiple chat rooms, direct messaging, file sharing, emoji reactions, message encryption, and integrated video/voice calls. Built with modern web technologies and optimized for performance.',
-      technologies: ['React', 'Socket.io', 'WebRTC', 'Redis', 'MongoDB', 'Express'],
-      liveUrl: 'https://chat-app-demo.com',
-      githubUrl: 'https://github.com/josephkeam/chat-app',
-      imageUrl: 'https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&w=600',
+      title: 'Kamsio Portfolio Website',
+      description: 'Personal portfolio website showcasing projects, skills, and contact information.',
+      longDescription: 'A responsive and interactive portfolio website built to highlight web development projects, technical skills, and professional experience. Includes smooth navigation, project galleries, contact forms, and optimized performance for desktop and mobile devices.',
+      technologies: ['React', 'Next.js', 'Tailwind CSS', 'JavaScript', 'Vercel'],
+      liveUrl: 'https://kamsio-portfolio.vercel.app/',
+      githubUrl: 'https://github.com/Joseph9866/kamsio-portfolio.git',
+      imageUrl: 'images/Kamsiyoportfolio.png',
       category: 'Web Development',
-      features: ['Real-time Messaging', 'Video/Voice Calls', 'File Sharing', 'Message Encryption', 'Multiple Rooms']
+      features: ['Responsive Design', 'Project Showcase', 'Contact Form', 'Smooth Navigation', 'Performance Optimized']
     },
     {
       id: 7,
-      title: 'Data Analytics Dashboard',
-      description: 'Interactive dashboard for business analytics with real-time data visualization.',
-      longDescription: 'A comprehensive analytics dashboard providing real-time insights into business metrics, customer behavior, sales performance, and operational efficiency. Features interactive charts, customizable widgets, automated reporting, and data export capabilities.',
-      technologies: ['React', 'D3.js', 'Python', 'FastAPI', 'PostgreSQL', 'Redis'],
-      liveUrl: 'https://analytics-dashboard-demo.com',
-      githubUrl: 'https://github.com/josephkeam/analytics-dashboard',
-      imageUrl: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Data Science',
-      features: ['Real-time Analytics', 'Interactive Charts', 'Custom Widgets', 'Automated Reports', 'Data Export']
+      title: 'AI Inbox Automation Bot',
+      description: 'WhatsApp AI agent that responds intelligently to client messages using your business data.',
+      longDescription: 'An AI-powered WhatsApp chatbot that automatically responds to client inquiries using a knowledge base built from your business data. The agent learns from interactions to provide accurate, context-aware replies. Only the business owner can access, update, or delete the data, ensuring privacy and control. Reduces response time and improves customer engagement.',
+      technologies: ['Node.js', 'WhatsApp API', 'OpenAI GPT', 'MongoDB', 'Express'],
+      liveUrl: 'https://www.youtube.com/shorts/IsSniPqJPQQ',
+      githubUrl: '',
+      imageUrl: 'images/RAGagent.png',
+      category: 'AI & Automation',
+      features: ['Intelligent Responses', 'WhatsApp Integration', 'Business Data Memory', 'Privacy Controlled', 'Automated Customer Engagement']
     },
     {
       id: 8,
-      title: 'Serverless Blog Platform',
-      description: 'JAMstack blog platform with headless CMS and automated deployment.',
-      longDescription: 'A modern, fast, and secure blog platform built with JAMstack architecture. Features include headless CMS integration, markdown support, SEO optimization, comment system, search functionality, and automated deployment with CI/CD pipelines.',
-      technologies: ['Gatsby', 'GraphQL', 'Contentful', 'Netlify', 'Algolia', 'Disqus'],
-      liveUrl: 'https://blog-platform-demo.com',
-      githubUrl: 'https://github.com/josephkeam/blog-platform',
-      imageUrl: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Web Development',
-      features: ['Headless CMS', 'SEO Optimized', 'Search Functionality', 'Comment System', 'Auto Deployment']
+      title: 'Voice Agent',
+      description: 'Voice agent powered by ElevenLabs for handling enquiries, bookings, support, and lead collection.',
+      longDescription: 'An AI-driven voice agent capable of managing customer interactions over calls. Handles enquiries, schedules bookings, provides support, and collects leads automatically. Integrates seamlessly into customer support workflows, reducing manual workload and improving response efficiency.',
+      technologies: ['ElevenLabs', 'Node.js', 'Twilio', 'AI Speech Recognition', 'Cloud Functions'],
+      liveUrl: 'https://customcx-leads-chatbot.netlify.app/',
+      githubUrl: '',
+      imageUrl: 'images/Voiceagent.png',
+      category: 'Customer Support',
+      features: ['Voice Interaction', 'Lead Collection', 'Automated Support', 'Bookings Management', 'AI-powered Responses']
     },
     {
       id: 9,
-      title: 'IoT Monitoring System',
-      description: 'IoT device monitoring and control system with cloud integration.',
-      longDescription: 'A comprehensive IoT monitoring system for tracking and controlling various sensors and devices. Features include real-time data collection, alert notifications, device management, historical data analysis, and cloud-based dashboard for remote monitoring.',
-      technologies: ['Python', 'MQTT', 'InfluxDB', 'Grafana', 'AWS IoT', 'Raspberry Pi'],
-      liveUrl: 'https://iot-monitoring-demo.com',
-      githubUrl: 'https://github.com/josephkeam/iot-monitoring',
-      imageUrl: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'IoT',
-      features: ['Real-time Monitoring', 'Alert System', 'Device Management', 'Historical Analysis', 'Cloud Integration']
-    },
-    {
-      id: 10,
-      title: 'Mobile Banking App',
-      description: 'Secure mobile banking application with biometric authentication.',
-      longDescription: 'A secure and user-friendly mobile banking application featuring biometric authentication, account management, money transfers, bill payments, transaction history, budget tracking, and customer support chat. Built with robust security measures and compliance standards.',
-      technologies: ['React Native', 'Node.js', 'MongoDB', 'JWT', 'Biometric Auth', 'Push Notifications'],
-      liveUrl: 'https://banking-app-demo.com',
-      githubUrl: 'https://github.com/josephkeam/banking-app',
-      imageUrl: 'https://images.pexels.com/photos/4968630/pexels-photo-4968630.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Mobile Development',
-      features: ['Biometric Auth', 'Money Transfers', 'Bill Payments', 'Budget Tracking', 'Push Notifications']
-    },
-    {
-      id: 11,
-      title: 'API Management Platform',
-      description: 'Enterprise API gateway with rate limiting, analytics, and developer portal.',
-      longDescription: 'A comprehensive API management platform providing API gateway functionality, rate limiting, authentication, analytics, monitoring, developer portal, API documentation, and marketplace features. Designed for enterprise-scale API operations.',
-      technologies: ['Kong', 'React', 'Node.js', 'PostgreSQL', 'Redis', 'OpenAPI'],
-      liveUrl: 'https://api-platform-demo.com',
-      githubUrl: 'https://github.com/josephkeam/api-platform',
-      imageUrl: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Cloud Computing',
-      features: ['API Gateway', 'Rate Limiting', 'Developer Portal', 'API Analytics', 'Documentation']
-    },
-    {
-      id: 12,
-      title: 'Blockchain Voting System',
-      description: 'Secure and transparent voting system built on blockchain technology.',
-      longDescription: 'A secure, transparent, and tamper-proof voting system built on blockchain technology. Features include voter authentication, ballot creation, real-time vote counting, result verification, audit trails, and compliance with electoral standards.',
-      technologies: ['Solidity', 'Web3.js', 'React', 'IPFS', 'MetaMask', 'Truffle'],
-      liveUrl: 'https://voting-system-demo.com',
-      githubUrl: 'https://github.com/josephkeam/blockchain-voting',
-      imageUrl: 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600',
-      category: 'Blockchain',
-      features: ['Blockchain Security', 'Transparent Results', 'Audit Trails', 'Smart Contracts', 'Decentralized']
+      title: 'AI Voice Assistant Agent',
+      description: '24/7 voice-powered sales and support assistant for websites, handling inquiries and qualifying leads automatically.',
+      longDescription: 'The CustomCX Voice Agent interacts with website visitors in a natural, human-like tone. It answers questions, explains services, and qualifies leads without human intervention. Operates continuously, providing professional customer support, automating sales and support workflows, and enabling business growth around the clock.',
+      technologies: ['AI Speech Recognition', 'Node.js', 'Twilio', 'ElevenLabs', 'Web Integration'],
+      liveUrl: 'https://youtu.be/L5CCKwKB5VI?si=ncyus4blRhu7Q167',
+      githubUrl: '',
+      imageUrl: 'images/AIvoiceassistantagent.png',
+      category: 'Customer Support',
+      features: ['Voice Interaction', 'Lead Qualification', '24/7 Availability', 'Automated Customer Support', 'Website Integration']
     }
   ];
 
@@ -178,9 +142,12 @@ const Projects: React.FC = () => {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div 
+            <a
               key={project.id}
-              className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
@@ -210,35 +177,36 @@ const Projects: React.FC = () => {
 
                 <div className="card-actions justify-between items-center">
                   <button 
-                    onClick={() => setSelectedProject(project)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedProject(project);
+                    }}
                     className="btn btn-primary btn-sm"
                   >
                     <Eye className="w-4 h-4 mr-1" />
                     View Details
                   </button>
                   <div className="flex space-x-2">
-                    <a 
-                      href={project.liveUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                    <span 
                       className="btn btn-ghost btn-sm btn-circle"
                       title="Live Demo"
                     >
                       <ExternalLink className="w-4 h-4" />
-                    </a>
-                    <a 
-                      href={project.githubUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                    </span>
+                    <span 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(project.githubUrl, '_blank');
+                      }}
                       className="btn btn-ghost btn-sm btn-circle"
                       title="GitHub"
                     >
                       <Github className="w-4 h-4" />
-                    </a>
+                    </span>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
