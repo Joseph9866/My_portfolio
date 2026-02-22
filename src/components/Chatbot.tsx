@@ -1,16 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useChat } from '@ai-sdk/react';
-import { DefaultChatTransport } from 'ai';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageSquare, X, Send, Bot, User, ChevronDown } from 'lucide-react';
 
-const transport = new DefaultChatTransport({ api: '/api/chat' });
-
-function getMessageText(message: { parts?: Array<{ type: string; text?: string }> }): string {
-  if (!message.parts || !Array.isArray(message.parts)) return '';
-  return message.parts
-    .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
-    .map((p) => p.text)
-    .join('');
+interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
 }
 
 const SUGGESTED_QUESTIONS = [
@@ -23,12 +17,11 @@ const SUGGESTED_QUESTIONS = [
 const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { messages, sendMessage, status } = useChat({ transport });
-
-  const isLoading = status === 'streaming' || status === 'submitted';
+  const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -40,15 +33,117 @@ const Chatbot: React.FC = () => {
     }
   }, [isOpen]);
 
+  const sendMessage = useCallback(async (text: string) => {
+    if (!text.trim() || isLoading) return;
+
+    const userMessage: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      content: text,
+    };
+
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+    setIsLoading(true);
+
+    // Cancel any previous request
+    if (abortRef.current) abortRef.current.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: updatedMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`);
+      }
+
+      const assistantMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: '',
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+
+      // Parse the SSE stream
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No response body');
+
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith('data:')) continue;
+          const data = trimmed.slice(5).trim();
+          if (data === '[DONE]') continue;
+
+          try {
+            const parsed = JSON.parse(data);
+            // Handle AI SDK UIMessage stream format
+            if (parsed.type === 'text-delta' && parsed.textDelta) {
+              setMessages((prev) => {
+                const copy = [...prev];
+                const last = copy[copy.length - 1];
+                if (last && last.role === 'assistant') {
+                  copy[copy.length - 1] = {
+                    ...last,
+                    content: last.content + parsed.textDelta,
+                  };
+                }
+                return copy;
+              });
+            }
+          } catch {
+            // skip invalid JSON
+          }
+        }
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === 'AbortError') return;
+      // Add error message
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          content: "Sorry, I'm having trouble connecting right now. Please try again later.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [messages, isLoading]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-    sendMessage({ text: input });
+    const text = input;
     setInput('');
+    sendMessage(text);
   };
 
   const handleSuggestionClick = (question: string) => {
-    sendMessage({ text: question });
+    sendMessage(question);
   };
 
   return (
@@ -80,7 +175,7 @@ const Chatbot: React.FC = () => {
                 <Bot className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-semibold text-sm leading-tight">Joseph's Assistant</h3>
+                <h3 className="font-semibold text-sm leading-tight">{"Joseph's Assistant"}</h3>
                 <p className="text-xs opacity-80">Ask me anything about Joseph</p>
               </div>
             </div>
@@ -104,7 +199,7 @@ const Chatbot: React.FC = () => {
                   </div>
                   <div className="bg-base-200 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%]">
                     <p className="text-sm leading-relaxed">
-                      Hi! I'm Joseph's portfolio assistant. I can tell you about his skills, projects, experience, and more. What would you like to know?
+                      {"Hi! I'm Joseph's portfolio assistant. I can tell you about his skills, projects, experience, and more. What would you like to know?"}
                     </p>
                   </div>
                 </div>
@@ -126,8 +221,7 @@ const Chatbot: React.FC = () => {
 
             {/* Chat messages */}
             {messages.map((message) => {
-              const text = getMessageText(message);
-              if (!text) return null;
+              if (!message.content && message.role === 'assistant' && !isLoading) return null;
 
               const isUser = message.role === 'user';
 
@@ -138,9 +232,7 @@ const Chatbot: React.FC = () => {
                 >
                   <div
                     className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                      isUser
-                        ? 'bg-secondary/10'
-                        : 'bg-primary/10'
+                      isUser ? 'bg-secondary/10' : 'bg-primary/10'
                     }`}
                   >
                     {isUser ? (
@@ -156,27 +248,57 @@ const Chatbot: React.FC = () => {
                         : 'bg-base-200 text-base-content rounded-tl-sm'
                     }`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{text}</p>
+                    {message.content ? (
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {message.content}
+                      </p>
+                    ) : (
+                      <div className="flex gap-1 py-1">
+                        <span
+                          className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce"
+                          style={{ animationDelay: '0ms' }}
+                        />
+                        <span
+                          className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce"
+                          style={{ animationDelay: '150ms' }}
+                        />
+                        <span
+                          className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce"
+                          style={{ animationDelay: '300ms' }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               );
             })}
 
-            {/* Typing indicator */}
-            {isLoading && (
-              <div className="flex gap-2">
-                <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Bot className="w-4 h-4 text-primary" />
-                </div>
-                <div className="bg-base-200 rounded-2xl rounded-tl-sm px-4 py-3">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                    <span className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                    <span className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+            {/* Typing indicator when loading and last message has content */}
+            {isLoading &&
+              messages.length > 0 &&
+              messages[messages.length - 1].role === 'user' && (
+                <div className="flex gap-2">
+                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Bot className="w-4 h-4 text-primary" />
+                  </div>
+                  <div className="bg-base-200 rounded-2xl rounded-tl-sm px-4 py-3">
+                    <div className="flex gap-1">
+                      <span
+                        className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce"
+                        style={{ animationDelay: '0ms' }}
+                      />
+                      <span
+                        className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce"
+                        style={{ animationDelay: '150ms' }}
+                      />
+                      <span
+                        className="w-2 h-2 bg-base-content/40 rounded-full animate-bounce"
+                        style={{ animationDelay: '300ms' }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
             <div ref={messagesEndRef} />
           </div>

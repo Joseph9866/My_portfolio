@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ai-sdk/react": "^3.0.0",
     "@emailjs/browser": "^3.12.1",
     "ai": "^6.0.0",
     "aos": "^2.3.4",

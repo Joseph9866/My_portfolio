@@ -1,6 +1,11 @@
-import { streamText, convertToModelMessages, UIMessage } from 'ai'
+import { streamText } from 'ai'
 
 export const maxDuration = 30
+
+interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
 
 const KNOWLEDGE_BASE = `
 You are Joseph Kimani's portfolio assistant. You answer questions about Joseph based ONLY on the following information. Be friendly, professional, and concise. If someone asks something not covered below, politely let them know you can only answer questions about Joseph's background and work.
@@ -167,14 +172,39 @@ export default async function handler(req: Request) {
     return new Response('Method not allowed', { status: 405 })
   }
 
-  const { messages }: { messages: UIMessage[] } = await req.json()
+  const { messages }: { messages: ChatMessage[] } = await req.json()
 
   const result = streamText({
     model: 'openai/gpt-4o-mini',
     system: KNOWLEDGE_BASE,
-    messages: await convertToModelMessages(messages),
-    abortSignal: req.signal,
+    messages: messages.map((m) => ({
+      role: m.role as 'user' | 'assistant',
+      content: m.content,
+    })),
   })
 
-  return result.toUIMessageStreamResponse()
+  // Stream plain text chunks via SSE
+  const encoder = new TextEncoder()
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        for await (const chunk of result.textStream) {
+          const data = JSON.stringify({ type: 'text-delta', textDelta: chunk })
+          controller.enqueue(encoder.encode(`data: ${data}\n\n`))
+        }
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'))
+        controller.close()
+      } catch (err) {
+        controller.error(err)
+      }
+    },
+  })
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    },
+  })
 }
